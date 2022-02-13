@@ -1,36 +1,15 @@
 <template>
   <v-main>
     <v-container>
-      <v-breadcrumbs
-        :items="links"
-        style="padding: 0px; color: black"
-      />
-      <v-row style="margin-top: 20px;">
-        <v-col
-          class="listColumn"
-          cols="12"
-          md="3"
-        >
-          <v-card
-            class="mx-auto"
-            max-width="300"
-            tile
-            elevation="0"
-          >
-            <v-list
-              shaped
-              color="blue-grey lighten-5"
-            >
-              <v-subheader
-                style="font-size: 14px"
-                class="text-uppercase"
-              >
+      <v-breadcrumbs :items="links" style="padding: 0px; color: black" />
+      <v-row style="margin-top: 20px">
+        <v-col class="listColumn" cols="12" md="3">
+          <v-card class="mx-auto" max-width="300" tile elevation="0">
+            <v-list shaped color="blue-grey lighten-5">
+              <v-subheader style="font-size: 14px" class="text-uppercase">
                 Danh mục sản phẩm
               </v-subheader>
-              <v-list-item-group
-                v-model="selectedItem"
-                color="primary"
-              >
+              <v-list-item-group v-model="selectedItem" color="primary">
                 <v-list-item
                   v-for="(category, i) in categories"
                   :key="i"
@@ -50,10 +29,7 @@
             </v-list>
           </v-card>
         </v-col>
-        <v-col
-          cols="12"
-          md="9"
-        >
+        <v-col cols="12" md="9">
           <div class="filterProduct">
             <v-btn
               depressed
@@ -89,12 +65,7 @@
             </v-btn>
           </div>
           <v-row style="margin-top: 20px">
-            <v-col
-              v-for="(product, i) in products"
-              :key="i"
-              cols="6"
-              md="3"
-            >
+            <v-col v-for="(product, i) in products" :key="i" cols="6" md="3">
               <product-card :product="product" />
             </v-col>
           </v-row>
@@ -105,10 +76,10 @@
 </template>
 
 <script>
-import ProductCard from './ProductCard.vue';
+import ProductCard from "./ProductCard.vue";
 export default {
   components: {
-    ProductCard
+    ProductCard,
   },
   data: () => ({
     // w: window.innerWidth,
@@ -118,36 +89,43 @@ export default {
       {
         text: "Trang chủ",
         disabled: false,
-        href: "/"
+        href: "/",
       },
       {
         text: "Sản phẩm",
         disabled: false,
-        href: "/product"
-      }
+        href: "/product",
+      },
     ],
     items: [
       {
         icon: "mdi-wifi",
-        text: "Giày nam"
+        text: "Giày nam",
       },
       {
         icon: "mdi-bluetooth",
-        text: "Giày nữ"
+        text: "Giày nữ",
       },
       {
         icon: "mdi-chart-donut",
-        text: "Giày Đôi"
-      }
+        text: "Giày Đôi",
+      },
     ],
   }),
   computed: {
     categories() {
-      return this.$store.state.category.categories;
+      let result = [];
+      const categories = this.$store.state.category.categories;
+      categories.map((x) => {
+        x.category.map((y) => {
+          result.push({ name: y.name, _id: y._id });
+        });
+      });
+      return result;
     },
     products() {
       return this.$store.state.product.products;
-    }
+    },
   },
   // watch: {
   //   selectedItem: function(val) {
@@ -160,33 +138,41 @@ export default {
   // },
   async created() {
     await Promise.all([
-      this.$store.dispatch('category/getAllCategory'), 
-      this.$store.dispatch('product/getProductByCategory', { categoryId: this.$route.params.categoryId}),
-    ])
+      this.$store.dispatch("category/getAllCategory"),
+      this.$store.dispatch("product/getProductByCategory", {
+        categoryId: this.$route.params.categoryId,
+      }),
+    ]);
     this.categories.forEach((r, i) => {
       if (r._id === this.$route.params.categoryId) {
         this.selectedItem = i;
         return;
       }
-    })
+    });
   },
   methods: {
     async loadProduct(category_id) {
       try {
-        await this.$store.dispatch('product/getProductByCategory', { categoryId: category_id });
+        await this.$store.dispatch("product/getProductByCategory", {
+          categoryId: category_id,
+        });
       } catch (error) {
-        alert('có lỗi xảy ra');
+        alert("có lỗi xảy ra");
       }
     },
     async findByPrice(startPrice, endPrice) {
       try {
-        await this.$store.dispatch('product/getProductByCategory', { categoryId: this.$route.params.categoryId, startPrice: startPrice, endPrice: endPrice })
+        await this.$store.dispatch("product/getProductByCategory", {
+          categoryId: this.$route.params.categoryId,
+          startPrice: startPrice,
+          endPrice: endPrice,
+        });
       } catch (error) {
         console.log(error);
-        alert('có lỗi xảy ra');
+        alert("có lỗi xảy ra");
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

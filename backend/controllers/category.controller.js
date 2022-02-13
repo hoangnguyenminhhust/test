@@ -14,8 +14,14 @@ module.exports = {
   },
   async deleteCategory(req, res) {
     try {
-      const product = await Product.findOne({ category_id: req.params.categoryId });
-      if (product) return res.status(405).send({ error: 'You must delete all products in category!!' });
+      const product = await Product.findOne({
+        category_id: req.params.categoryId,
+      });
+      if (product) {
+        return res.status(405).send({
+          error: 'You must delete all products in category!!',
+        });
+      }
       await Category.findByIdAndDelete(req.params.categoryId);
 
       return res.status(200).send();
@@ -26,7 +32,6 @@ module.exports = {
   async listAllCategory(req, res) {
     try {
       const categories = await Category.find({}).populate('parent');
-
       res.status(200).send(categories);
     } catch (error) {
       res.status(404).send(error);
@@ -35,9 +40,10 @@ module.exports = {
   async editCategory(req, res) {
     try {
       await Category.findByIdAndUpdate(req.params.categoryId, {
-        name: req.body.name,
-        level: parseInt(req.body.level, 10),
-      }, { new: true });
+        ...req.body,
+      }, {
+        new: true,
+      });
 
       res.status(200).send();
     } catch (error) {

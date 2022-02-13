@@ -454,6 +454,7 @@ export default {
   async created() {
     this.setupEventListener();
     await this.$store.dispatch("getAllCategory");
+    console.log(this.categories)
   }
 };
 </script>

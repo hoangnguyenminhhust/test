@@ -1,5 +1,5 @@
 const ParentCategory = require('../models/parentCategory');
-const Product = require('../models/product');
+const Category = require('../models/category');
 
 module.exports = {
   async createParentCategory(req, res) {
@@ -14,9 +14,15 @@ module.exports = {
   },
   async deleteParentCategory(req, res) {
     try {
-      const product = await Product.findOne({ category_id: req.params.categoryId });
-      if (product) return res.status(405).send({ error: 'You must delete all products in category!!' });
-      await ParentCategory.findByIdAndDelete(req.params.categoryId);
+      const product = await Category.findOne({
+        parent: req.params.parentCategoryId,
+      });
+      if (product) {
+        return res.status(405).send({
+          error: 'You must delete all category in parent!!',
+        });
+      }
+      await ParentCategory.findByIdAndDelete(req.params.parentCategoryId);
 
       return res.status(200).send();
     } catch (error) {
@@ -25,8 +31,8 @@ module.exports = {
   },
   async listAllParentCategory(req, res) {
     try {
-      const categories = await ParentCategory.find({}).sort({ level: 1 }).exec();
-
+      const categories = await ParentCategory.find({}).populate('category');
+      console.log(categories);
       res.status(200).send(categories);
     } catch (error) {
       res.status(404).send(error);
@@ -34,11 +40,12 @@ module.exports = {
   },
   async editParentCategory(req, res) {
     try {
-      await ParentCategory.findByIdAndUpdate(req.params.categoryId, {
+      await ParentCategory.findByIdAndUpdate(req.params.parentCategoryId, {
         name: req.body.name,
         level: parseInt(req.body.level, 10),
-      }, { new: true });
-
+      }, {
+        new: true,
+      });
       res.status(200).send();
     } catch (error) {
       res.status(404).send(error);

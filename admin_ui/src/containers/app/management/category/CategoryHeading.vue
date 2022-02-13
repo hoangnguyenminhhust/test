@@ -107,6 +107,7 @@ import { mapActions } from "vuex";
 export default {
   mixins: [validationMixin],
   props: [
+    "categoriesGroup",
     "title",
     "selectAll",
     "isSelectedAll",
@@ -121,7 +122,6 @@ export default {
   ],
   data() {
     return {
-      categoriesGroup: [],
       categoryGroup: {
         name: "",
         level: "",
@@ -153,19 +153,24 @@ export default {
   },
   components: {},
   methods: {
-    ...mapActions(["addCategory", "getAllCategory"]), // Action api
+    ...mapActions([
+      "addCategory",
+      "getAllCategory",
+      "addParentCategory",
+      "getAllParentCategory",
+    ]), // Action api
     async onSubmitGroup() {
       this.$v.categoryGroup.$touch();
       if (this.$v.categoryGroup.$anyError) return;
 
       try {
-        await this.addCategory(this.categoryGroup); // Action api
+        await this.addParentCategory(this.categoryGroup); // Action api
         this.$bvModal.hide("addGroupCategoryModal");
         this.categoryGroup = {
           name: "",
           level: "",
         };
-        await this.getAllCategory();
+        await this.getAllParentCategory();
         this.$v.categoryGroup.$reset();
       } catch (error) {
         alert(error);
@@ -180,6 +185,7 @@ export default {
       };
     },
     async onSubmit() {
+      console.log(this.category)
       this.$v.category.$touch();
       if (this.$v.category.$anyError) return;
 
@@ -190,7 +196,7 @@ export default {
           name: "",
           parent: "",
         };
-        await this.getAllCategory();
+        await this.getAllParentCategory();
         this.$v.category.$reset();
       } catch (error) {
         alert(error);
@@ -203,6 +209,8 @@ export default {
         name: "",
         parent: "",
       };
+    },
+    async created() {
     },
   },
 };

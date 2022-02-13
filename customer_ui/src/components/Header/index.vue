@@ -90,7 +90,7 @@
                 </v-tooltip>
               </div>
               <div v-if="user">
-                <v-menu offset-y left>
+                <v-menu :offset-x="true" left>
                   <template v-slot:activator="{ on, attrs }">
                     <v-btn text v-bind="attrs" class="header_icon" v-on="on">
                       <v-icon> mdi-chevron-down </v-icon>
@@ -209,15 +209,30 @@
             </v-btn>
           </template>
           <v-list>
-            <v-list-item
-              v-for="(item, index) in categories"
-              :key="index"
-              dense
-              link
-              @click="routeCategory(item._id)"
-            >
-              <v-list-item-title v-text="item.name" />
-            </v-list-item>
+            <v-row style="width: 400px" align="center" dense>
+              <v-list-item
+                v-for="(item, index) in categories"
+                :key="index"
+                dense
+                link
+              >
+                <v-col class="pa-0" cols="6" md="4" offset="0">
+                  {{ item.name }}
+                </v-col>
+                <v-col class="pa-0" cols="6" md="8" offset="0">
+                  <v-list>
+                    <v-list-item
+                      v-for="(item2, index2) in item.category"
+                      :key="index2"
+                      @click="routeCategory(item2._id)"
+                      dense
+                      link
+                    >
+                      <v-list-item-title v-text="item2.name" />
+                    </v-list-item> </v-list
+                ></v-col>
+              </v-list-item>
+            </v-row>
           </v-list>
         </v-menu>
       </v-col>

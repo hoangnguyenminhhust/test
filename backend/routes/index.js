@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const userRoute = require('./user.route');
 const categoryRoute = require('./category.route');
+const parentCategoryRoute = require('./parentCategory.route');
 const productRoute = require('./product.route');
 const uploadRoute = require('./upload.route');
 const orderRoute = require('./order.route');
@@ -14,6 +15,7 @@ const rateRoute = require('./rate.route');
 
 router.use('/user', userRoute);
 router.use('/category', categoryRoute);
+router.use('/parentCategory', parentCategoryRoute);
 router.use('/product', productRoute);
 router.use('/upload', uploadRoute);
 router.use('/order', orderRoute);

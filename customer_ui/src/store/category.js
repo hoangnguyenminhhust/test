@@ -10,12 +10,12 @@ const getters = {
 const actions = {
   async getAllCategory({ commit }) {
     try {
-      const { data } = await axios.get('/category');
+      const { data } = await axios.get('/parentCategory');
       commit('GET_ALL_CATEGORY', data)
     } catch (error) {
       return Promise.reject(error);
     }
-  }
+  },
 }
 
 const mutations = {
