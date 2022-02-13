@@ -22,13 +22,13 @@
             </div>
             <div class="d-flex align-center">
               <v-card-subtitle
-                v-if="(order.status === 'pending') & order.ship_code"
+                v-if="(order.status === 'pending') && order.ship_code"
                 style="font-size: 16px; color: amber"
               >
                 Đang vận chuyển
               </v-card-subtitle>
               <v-card-subtitle
-                v-else-if="(order.status === 'pending') & !order.ship_code"
+                v-else-if="(order.status === 'pending') && !order.ship_code"
                 style="font-size: 16px; color: red"
               >
                 Đang xử lý

@@ -10,30 +10,6 @@
           class="top-right-button"
           >Thêm mới</b-button
         >
-        <!-- <b-button-group>
-          <b-dropdown right @click="selectAll(true)" variant="primary">
-            <label
-              class="custom-control custom-checkbox pl-4 mb-0 d-inline-block"
-              slot="button-content"
-            >
-              <input
-                class="custom-control-input"
-                type="checkbox"
-                :checked="isSelectedAll"
-                v-shortkey="{select: ['ctrl','a'], undo: ['ctrl','d']}"
-                @shortkey="keymap"
-              />
-              <span
-                :class="{
-                'custom-control-label' :true,
-                'indeterminate' : isAnyItemSelected
-                }"
-              >&nbsp;</span>
-            </label>
-            <b-dropdown-item>delete</b-dropdown-item>
-            <b-dropdown-item>edit</b-dropdown-item>
-          </b-dropdown>
-        </b-button-group> -->
       </div>
       <piaf-breadcrumb />
       <div class="mb-2 mt-2">

@@ -4,35 +4,6 @@
       :title="$t('menu.category')"
     ></datatable-heading>
     <b-row>
-      <!-- <b-colxx xxs="12">
-        <vuetable
-          ref="vuetable"
-          class="table-divided order-with-arrow"
-          :api-mode="false"
-          :data="items"
-          :query-params="makeQueryParams"
-          :per-page="perPage"
-          :reactive-api-url="true"
-          :fields="fields"
-          pagination-path
-          :row-class="onRowClass"
-          @vuetable:pagination-data="onPaginationData"
-          @vuetable:row-clicked="rowClicked"
-          @vuetable:cell-rightclicked="rightClicked"
-        >
-          <div slot="actions" slot-scope="props">
-            <b-form-checkbox
-              :checked="selectedItems.includes(props.rowData._id)"
-              class="itemCheck mb-0"
-            ></b-form-checkbox>
-          </div>
-        </vuetable>
-        <vuetable-pagination-bootstrap
-          class="mt-4"
-          ref="pagination"
-          @vuetable-pagination:change-page="onChangePage"
-        />
-      </b-colxx> -->
       <b-table bordered hover :items="categories" :fields="fields">
         <template #cell(actions)="row">
           <b-button

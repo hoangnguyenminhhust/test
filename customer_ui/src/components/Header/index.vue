@@ -2,13 +2,13 @@
   <v-main
     style="background-image: url('../../assets/images/logo/logo-back.png')"
   >
-    <v-row>
+    <v-row class="d-flex justify-content-between align-items-center">
       <v-container class="pa-0 pt-1" style="height: 87px">
         <div class="d-flex justify-space-between">
           <div class="drawer">
             <v-app-bar-nav-icon @click="drawer = !drawer" />
           </div>
-          <div class="wrapper">
+          <div class="wrapper" @click="$router.push('/')">
             <div class="logo mt-2 d-flex align-center">
               <img height="70px" src="../../assets/images/logo/logo-back.png" />
               <div>
@@ -121,14 +121,15 @@
                       text
                       v-bind="attrs"
                       class="header_icon"
+                      @click="$router.push({ path: '/cart' })"
                       v-on="on"
-                      color="error"
-                      @click="registerDialog = true"
                     >
-                      <v-icon> mdi-cart </v-icon>
+                      <v-badge bordered color="orange" :content="cartNumber">
+                        <v-icon> mdi-cart </v-icon>
+                      </v-badge>
                     </v-btn>
                   </template>
-                  <span>Đăng bán</span>
+                  <span>Giỏ hàng</span>
                 </v-tooltip>
               </div>
             </div>
@@ -190,8 +191,9 @@
         />
       </v-container>
     </v-row>
-    <v-row class="ma-0">
-      <v-col cols="12" md="3" offset="1" class="pa-0 mt-1">
+    <v-divider></v-divider>
+    <v-row class="ma-0 d-flex justify-content-between align-items-center">
+      <v-col cols="12" md="3" offset="1" class="pa-0">
         <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -219,13 +221,29 @@
           </v-list>
         </v-menu>
       </v-col>
-      <v-col cols="12" md="3" offset="5" class="pa-0 mt-1">
-        <v-btn small class="pa-0" color="primary" text v-bind="attrs" v-on="on">
+      <v-col cols="12" md="3" offset="0" class="pa-0">
+        <v-btn
+          small
+          class="pa-0"
+          color="primary"
+          @click="$router.push({ path: `/order-history/${orderUser}` })"
+          text
+        >
+          Hoá đơn
+        </v-btn>
+      </v-col>
+      <v-col cols="12" md="3" offset="2" class="pa-0">
+        <v-btn small class="pa-0" color="primary" text>
           <v-icon dark> mdi-magnify </v-icon>
-          <v-autocomplete dense full-width placeholder="Tìm kiếm"></v-autocomplete>
+          <v-autocomplete
+            dense
+            full-width
+            placeholder="Tìm kiếm"
+          ></v-autocomplete>
         </v-btn>
       </v-col>
     </v-row>
+    <v-divider></v-divider>
   </v-main>
 </template>
 

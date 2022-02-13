@@ -41,7 +41,7 @@ const actions = {
   },
   async deleteImage({commit}, { key }) {
     try {
-      await axios.post('/upload/delete', { key: key });     
+      // await axios.post('/upload/delete', { key: key });     
       commit('DELETE_IMAGE')
       return Promise.resolve();
     } catch (error) {

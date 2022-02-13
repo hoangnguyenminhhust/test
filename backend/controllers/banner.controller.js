@@ -17,7 +17,9 @@ module.exports = {
   },
   async listAllBanner(req, res) {
     try {
-      const bannbers = await Banner.find().limit(4).sort({ level: 1 });
+      const bannbers = await Banner.find().limit(4).sort({
+        level: 1,
+      });
 
       res.status(200).send(bannbers);
     } catch (error) {
@@ -29,7 +31,9 @@ module.exports = {
       await Banner.findByIdAndUpdate(req.params.bannerId, {
         key: req.body.key,
         level: req.body.level,
-      }, { new: true });
+      }, {
+        new: true,
+      });
 
       res.status(200).send();
     } catch (error) {
@@ -38,8 +42,9 @@ module.exports = {
   },
   async deleteBanner(req, res) {
     try {
-      await Banner.findByIdAndDelete(req.params.bannerId);
-
+      await Banner.findOneAndDelete({
+        _id: req.params.bannerId,
+      });
       res.status(200).send();
     } catch (error) {
       res.status(404).send(error);

@@ -28,7 +28,7 @@ router.route('/:productId')
   // eslint-disable-next-line max-len
   .get(productController.getProduct) // Hàm xem sản phẩm của user đã đăng nhập ( Tính rate)
   .put(productController.editProduct)
-  .delete(auth.authUser, productController.deleteProduct);
+  .delete(auth.authAdmin, productController.deleteProduct);
 
 router.route('/auth/:productId/count')
   .put(auth.authUser, productController.countProduct);

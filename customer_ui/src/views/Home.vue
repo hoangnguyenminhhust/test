@@ -1,16 +1,16 @@
 <template>
-  <div style="background-color: white">
-    <!-- <Banner
+  <div style="background-color: #ECEFF1">
+    <Banner
       class="banner"
     />
-    <service class="banner" /> -->
-    <!-- <top-product
+    <service class="banner" />
+    <top-product
       :products="bestSell"
       :title="'top sản phẩm bán chạy'"
-    /> -->
+    />
     <new-product
       :products="products"
-      :title="'Sản phẩm mới nhất'"
+      :title="'top sản phẩm mới nhất'"
     />
     <!-- <v-main>
       <v-container>
@@ -34,19 +34,19 @@
 
 <script>
 // @ is an alias to /src
-// import Banner from '../components/Home/Banner'
-// import TopProduct from '../components/Product/ListProduct'
+import Banner from '../components/Home/Banner'
+import TopProduct from '../components/Product/ListProduct'
 import NewProduct from '../components/Product/ListProduct'
-// import Service from '../components/components/Service'
+import Service from '../components/components/Service'
 // import Footer from '../components/Footer/index'
 
 export default {
   name: 'Home',
   components: {
-    // Banner,
-    // TopProduct,
+    Banner,
+    TopProduct,
     NewProduct,
-    // Service,
+    Service,
   },
   computed: {
     products() {

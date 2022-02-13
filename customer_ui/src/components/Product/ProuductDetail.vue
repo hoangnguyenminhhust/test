@@ -1,25 +1,16 @@
 <template>
-  <v-main style="background-color: #ECEFF1">
+  <v-main style="background-color: #eceff1">
     <v-container>
-      <v-breadcrumbs
-        :items="items"
-        class="ma-1"
-        style="padding: 0px"
-      />
-      <v-card
-        style="mt-1"
-        elevation="0"
-      >
-        
-        <v-card-title><v-icon>mdi-antenna</v-icon>{{ product.name }}</v-card-title>
+      <v-breadcrumbs :items="items" class="ma-1" style="padding: 0px" />
+      <v-card style="mt-1" elevation="0">
+        <v-card-title
+          ><v-icon>mdi-antenna</v-icon>{{ product.name }}</v-card-title
+        >
         <v-divider />
         <v-card-text>
           <v-row>
-            <v-col
-              md="6"
-              cols="12"
-            >
-              <div style="margin: 50px 0px;">
+            <v-col md="6" cols="12">
+              <div style="margin: 50px 0px">
                 <!-- <v-img
                   v-if="product.images && Array.isArray(product.images)"
                   :src="s3Url + product.images[0]"
@@ -39,14 +30,8 @@
                     height="300"
                   />
                 </v-carousel> -->
-                <v-card
-                  flat
-                  tile
-                >
-                  <v-window
-                    v-model="onboarding"
-                    reverse
-                  >
+                <v-card flat tile>
+                  <v-window v-model="onboarding" reverse>
                     <v-window-item
                       v-for="(image, n) in product.images"
                       :key="`card-${n}`"
@@ -73,12 +58,9 @@
 
                   <v-card-actions
                     class="justify-space-between"
-                    style="width: 500px;"
+                    style="width: 500px"
                   >
-                    <v-btn
-                      text
-                      @click="prev"
-                    >
+                    <v-btn text @click="prev">
                       <v-icon>mdi-chevron-left</v-icon>
                     </v-btn>
                     <v-item-group
@@ -92,19 +74,12 @@
                         :key="`btn-${n}`"
                         v-slot="{ active, toggle }"
                       >
-                        <v-btn
-                          :input-value="active"
-                          icon
-                          @click="toggle"
-                        >
+                        <v-btn :input-value="active" icon @click="toggle">
                           <v-icon>mdi-record</v-icon>
                         </v-btn>
                       </v-item>
                     </v-item-group>
-                    <v-btn
-                      text
-                      @click="next"
-                    >
+                    <v-btn text @click="next">
                       <v-icon>mdi-chevron-right</v-icon>
                     </v-btn>
                   </v-card-actions>
@@ -126,10 +101,7 @@
               </div>
             </v-col>
             <!-- <v-divider vertical /> -->
-            <v-col
-              md="6"
-              cols="12"
-            >
+            <v-col md="6" cols="12">
               <div>
                 <p>Mã sản phẩm: {{ product._id }}</p>
               </div>
@@ -152,14 +124,14 @@
                 </p>
               </div>
               <v-divider />
-              <br>
+              <br />
               <div>
                 <p class="display-1 font-weight-black">
                   {{ product.price | formatPrice }}đ
                 </p>
               </div>
               <v-divider />
-              <br>
+              <br />
               <div class="d-flex flex-row">
                 <div style="margin-right: 20px">
                   <span class="font-weight-black">Số Lượng:</span>
@@ -176,6 +148,16 @@
                     style="width: 100px; margin-right: 20px"
                   />
                 </div>
+                <div>
+                  <v-btn
+                    height="31px"
+                    :disabled="product.amount === 0"
+                    @click="addToCart"
+                  >
+                    <v-icon left> mdi-cart </v-icon>
+                    Thêm vào giỏ hàng
+                  </v-btn>
+                </div>
               </div>
               <div class="my-2">
                 <v-btn
@@ -186,48 +168,30 @@
                   :disabled="product.amount === 0"
                   @click="buy"
                 >
-                  Hiển thị thông tin người bán
+                  Mua ngay
                 </v-btn>
               </div>
             </v-col>
           </v-row>
         </v-card-text>
       </v-card>
-      <v-card
-        color="basil"
-        style="margin-top: 50px"
-        elevation="0"
-      >
-        <v-tabs
-          v-model="tab"
-          background-color="transparent"
-          color="basil"
-          grow
-        >
-          <v-tab
-            v-for="item in tabs"
-            :key="item"
-          >
+      <v-card color="basil" style="margin-top: 50px" elevation="0">
+        <v-tabs v-model="tab" background-color="transparent" color="basil" grow>
+          <v-tab v-for="item in tabs" :key="item">
             {{ item }}
           </v-tab>
         </v-tabs>
 
         <v-tabs-items v-model="tab">
           <v-tab-item>
-            <v-card
-              color="basil"
-              flat
-            >
+            <v-card color="basil" flat>
               <v-card-text>
                 <div v-html="description" />
               </v-card-text>
             </v-card>
           </v-tab-item>
           <v-tab-item>
-            <v-card
-              color="basil"
-              flat
-            >
+            <v-card color="basil" flat>
               <v-card-text>
                 <v-row
                   v-for="(property, i) in product.properties"
@@ -235,21 +199,12 @@
                   no-gutters
                 >
                   <v-col cols="3">
-                    <v-card
-                      class="pa-2"
-                      outlined
-                      tile
-                      color="#ECEFF1"
-                    >
+                    <v-card class="pa-2" outlined tile color="#ECEFF1">
                       {{ property.key }}
                     </v-card>
                   </v-col>
                   <v-col cols="6">
-                    <v-card
-                      class="pa-2"
-                      outlined
-                      tile
-                    >
+                    <v-card class="pa-2" outlined tile>
                       {{ property.value }}
                     </v-card>
                   </v-col>
@@ -259,21 +214,14 @@
           </v-tab-item>
         </v-tabs-items>
       </v-card>
-      <v-card
-        v-if="productRates"
-        style="margin-top: 50px"
-        elevation="0"
-      >
+      <v-card v-if="productRates" style="margin-top: 50px" elevation="0">
         <v-card-title>Đánh giá {{ product.name }}</v-card-title>
         <v-card-text>
           <div>
             <div class="d-flex flex-row">
-              <div
-                class="d-flex align-center"
-                style="margin: 10px;"
-              >
+              <div class="d-flex align-center" style="margin: 10px">
                 <div v-if="productRateAverage">
-                  <span style="font-size: 25px; color: #FF9800">{{
+                  <span style="font-size: 25px; color: #ff9800">{{
                     productRateAverage
                   }}</span>
                 </div>
@@ -287,35 +235,25 @@
                 half-increments
                 style="margin: 10px"
               />
-              <div
-                class="d-flex align-center"
-                style="margin: 10px"
-              >
+              <div class="d-flex align-center" style="margin: 10px">
                 <div>
-                  <span
-                    style="font-size: 18"
-                  >{{ productRates.length }} Đánh giá</span>
+                  <span style="font-size: 18"
+                    >{{ productRates.length }} Đánh giá</span
+                  >
                 </div>
               </div>
             </div>
             <v-row>
-              <v-col
-                cols="10"
-                md="4"
-              >
+              <v-col cols="10" md="4">
                 <div
                   v-for="(item, i) in filterRate"
                   :key="i"
-                  style="padding: 0px 10px;"
+                  style="padding: 0px 10px"
                 >
                   <div class="d-flex flex-row align-center">
                     <div class="d-flex align-center">
-                      <span style="font-size: 20px;">{{ item._id.rate }}</span>
-                      <v-btn
-                        icon
-                        color="amber"
-                        small
-                      >
+                      <span style="font-size: 20px">{{ item._id.rate }}</span>
+                      <v-btn icon color="amber" small>
                         <v-icon>mdi-star</v-icon>
                       </v-btn>
                     </div>
@@ -325,9 +263,9 @@
                       style="margin: 10px"
                     />
                     <div class="d-flex align-center">
-                      <span
-                        style="font-size: 16px; color: #FF9800"
-                      >{{ parseInt((item.count / totalRates) * 100) }}%</span>
+                      <span style="font-size: 16px; color: #ff9800"
+                        >{{ parseInt((item.count / totalRates) * 100) }}%</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -335,7 +273,7 @@
             </v-row>
             <v-row>
               <v-col
-                style="padding: 0px 10px;"
+                style="padding: 0px 10px"
                 class="d-flex justify-center"
                 cols="12"
                 md="4"
@@ -381,21 +319,14 @@
           </div>
         </v-card-text>
       </v-card>
-      <v-card
-        v-if="recommendProducts.length > 0"
-        elevation="0"
-      >
+      <v-card v-if="recommendProducts.length > 0" elevation="0">
         <recommend-products
           style="margin-top: 20px; padding: 0px"
           title="Sản phẩm bạn có thể quan tâm"
           :products="recommendProducts"
         />
       </v-card>
-      <v-dialog
-        v-model="rateDialog"
-        persistent
-        width="600px"
-      >
+      <v-dialog v-model="rateDialog" persistent width="600px">
         <v-card>
           <v-card-title>Viết đánh giá</v-card-title>
           <v-card-text>
@@ -456,18 +387,8 @@
 
           <v-card-actions>
             <v-spacer />
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="close()"
-            >
-              Hủy
-            </v-btn>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="sendRate()"
-            >
+            <v-btn color="blue darken-1" text @click="close()"> Hủy </v-btn>
+            <v-btn color="blue darken-1" text @click="sendRate()">
               Gửi đánh giá
             </v-btn>
           </v-card-actions>
@@ -486,25 +407,24 @@ import { required, email, numeric } from "vuelidate/lib/validators";
 export default {
   components: {
     rating: Rating,
-    "recommend-products": RecommendProduct
+    "recommend-products": RecommendProduct,
   },
   mixins: [validationMixin],
   data: () => ({
     tab: null,
     tabs: ["Mô tả", "Thông số kĩ thuật"],
-    text:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     items: [
       {
         text: "Trang chủ",
         disabled: false,
-        href: "/"
+        href: "/",
       },
       {
         text: "Sản phẩm",
         disabled: false,
-        href: "/product"
-      }
+        href: "/product",
+      },
     ],
     onboarding: 0,
     value: 0,
@@ -513,25 +433,25 @@ export default {
     customer: {
       fullname: "",
       phone: "",
-      email: ""
+      email: "",
     },
     content: "",
-    page: 1
+    page: 1,
   }),
   validations: {
     customer: {
       fullname: {
-        required
+        required,
       },
       phone: {
         required,
-        numeric
+        numeric,
       },
       email: {
         required,
-        email
-      }
-    }
+        email,
+      },
+    },
   },
   computed: {
     product() {
@@ -589,62 +509,62 @@ export default {
     },
     recommendProducts() {
       return this.$store.state.product.recommendProductDetail.filter(
-        r => r._id !== this.$route.params.productId
+        (r) => r._id !== this.$route.params.productId
       );
-    }
+    },
   },
   watch: {
-    '$route.params.productId': async function(newId, oldId) {
+    "$route.params.productId": async function (newId, oldId) {
       await Promise.all([
-      await this.$store.dispatch("product/getProduct", {
-        productId: newId
-      }),
-      await this.$store.dispatch("product/updateProduct", {
-        productId: newId,
-        view: this.product.views + 1
-      }),
-      await this.$store.dispatch("product/filterRateProduct", {
-        productId: newId
-      }),
-      await this.$store.dispatch("product/getProductRating", {
-        productId: newId
-      }),
-      await this.$store.dispatch("product/getRecommenProductDetail", {
-        productId: newId
-      })
-    ]);
-      window.scrollTo(0,0);
+        await this.$store.dispatch("product/getProduct", {
+          productId: newId,
+        }),
+        await this.$store.dispatch("product/updateProduct", {
+          productId: newId,
+          view: this.product.views + 1,
+        }),
+        await this.$store.dispatch("product/filterRateProduct", {
+          productId: newId,
+        }),
+        await this.$store.dispatch("product/getProductRating", {
+          productId: newId,
+        }),
+        await this.$store.dispatch("product/getRecommenProductDetail", {
+          productId: newId,
+        }),
+      ]);
+      window.scrollTo(0, 0);
     },
-    page: async function(val) {
+    page: async function (val) {
       try {
         await this.$store.dispatch("product/getProductRating", {
           productId: this.$route.params.productId,
           limit: 3,
-          skip: val
+          skip: val,
         });
       } catch (error) {
         alert("Có lỗi xảy ra vui lòng thử lại");
       }
-    }
+    },
   },
   async created() {
     await Promise.all([
       await this.$store.dispatch("product/getProduct", {
-        productId: this.$route.params.productId
+        productId: this.$route.params.productId,
       }),
       await this.$store.dispatch("product/updateProduct", {
         productId: this.$route.params.productId,
-        view: this.product.views + 1
+        view: this.product.views + 1,
       }),
       await this.$store.dispatch("product/filterRateProduct", {
-        productId: this.$route.params.productId
+        productId: this.$route.params.productId,
       }),
       await this.$store.dispatch("product/getProductRating", {
-        productId: this.$route.params.productId
+        productId: this.$route.params.productId,
       }),
       await this.$store.dispatch("product/getRecommenProductDetail", {
-        productId: this.$route.params.productId
-      })
+        productId: this.$route.params.productId,
+      }),
     ]);
   },
   methods: {
@@ -670,7 +590,7 @@ export default {
         await this.$store.dispatch("product/filterRateProduct", {
           productId: this.$route.params.productId,
           limit: 3,
-          skip: page
+          skip: page,
         });
       } catch (error) {
         alert("Có lỗi xảy ra vui lòng thử lại");
@@ -683,7 +603,7 @@ export default {
         if (localStorage.getItem("cart")) {
           products = JSON.parse(localStorage.getItem("cart")).products;
         }
-        products.forEach(r => {
+        products.forEach((r) => {
           if (this.product._id === r.product._id) {
             alert("đã tồn tại");
             check = true;
@@ -696,7 +616,7 @@ export default {
           "cart",
           JSON.stringify({
             products: products,
-            expiredTime: expiredTime
+            expiredTime: expiredTime,
           })
         );
         this.$store.commit("cart/ADD", { product: this.product, quantity: 1 });
@@ -712,7 +632,7 @@ export default {
         if (localStorage.getItem("cart")) {
           products = JSON.parse(localStorage.getItem("cart")).products;
         }
-        products.forEach(r => {
+        products.forEach((r) => {
           if (this.product._id === r.product._id) {
             check = true;
           }
@@ -724,12 +644,12 @@ export default {
             "cart",
             JSON.stringify({
               products: products,
-              expiredTime: expiredTime
+              expiredTime: expiredTime,
             })
           );
           this.$store.commit("cart/ADD", {
             product: this.product,
-            quantity: 1
+            quantity: 1,
           });
         }
         this.$router.push({ path: "/cart" });
@@ -753,15 +673,15 @@ export default {
             rate: this.rating,
             content: this.content,
             customer: this.customer,
-            user_id: this.currentUser ? this.currentUser._id : null
+            user_id: this.currentUser ? this.currentUser._id : null,
           });
           Promise.all([
             await this.$store.dispatch("product/getProductRating", {
-              productId: this.$route.params.productId
+              productId: this.$route.params.productId,
             }),
             await this.$store.dispatch("product/filterRateProduct", {
-              productId: this.$route.params.productId
-            })
+              productId: this.$route.params.productId,
+            }),
           ]);
           this.rateDialog = false;
           this.content = "";
@@ -772,7 +692,7 @@ export default {
       } catch (error) {
         alert("có lỗi xảy ra vui lòng thử lại");
       }
-    }
-  }
+    },
+  },
 };
 </script>

@@ -8,7 +8,7 @@
       tile
       class="indigo lighten-1 white--text text-center"
     >
-      <v-card-text>
+      <!-- <v-card-text>
         <v-btn
           v-for="icon in icons"
           :key="icon"
@@ -19,7 +19,7 @@
             {{ icon }}
           </v-icon>
         </v-btn>
-      </v-card-text>
+      </v-card-text> -->
 
       <v-card-text class="white--text pt-0">
         Chào mừng bạn đến với sàn giao dịch điện thoại và phụ kiện thoại. Trang web này tạo nên nhằm mục đích mua bán và trao đổi các loại thiết bị điện thoại thông minh. Tạo ra 1 cộng đồng mua bán, trao đổi lành mạnh tiện lợi, đáp ứng giao dịch nhanh nhất
